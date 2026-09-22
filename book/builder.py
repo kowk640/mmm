@@ -128,7 +128,7 @@ class Book(BaseDocTemplate):
             PageTemplate(id='plain', frames=[frame]),
         ])
         self.chapter = ''
-        self.seq = 0
+        self.hseq = 0
 
     def _deco(self, canv, doc):
         canv.saveState()
@@ -149,8 +149,8 @@ class Book(BaseDocTemplate):
             if lvl == 0:
                 self.chapter = fl.tocLabel
             self.notify('TOCEntry', (lvl, fl.tocLabel, self.page, fl.tocKey))
-            self.seq += 1
-            key = fl.tocKey or ('h%d' % self.seq)
+            self.hseq += 1
+            key = fl.tocKey or ('h%d' % self.hseq)
             self.canv.bookmarkPage(key)
             self.canv.addOutlineEntry(fl.tocLabel[:90], key, level=min(lvl, 2), closed=(lvl == 0))
 
