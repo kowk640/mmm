@@ -1,0 +1,22 @@
+import glob, os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import builder
+
+BASE = os.path.dirname(os.path.abspath(__file__))
+SRC = os.path.join(BASE, 'keysrc')
+FIG = os.path.join(BASE, 'figs')
+OUT = os.path.join(BASE, 'Kliuch_vidpovidei_kompaktnyi.pdf')
+
+meta = {
+    'title': '\u041a\u043b\u044e\u0447 \u0432\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0435\u0439',
+    'subtitle': '\u041a\u043e\u043c\u043f\u0430\u043a\u0442\u043d\u0438\u0439 \u0434\u043e\u0434\u0430\u0442\u043e\u043a \u0434\u043e \u043e\u043b\u0456\u043c\u043f\u0456\u0430\u0434\u043d\u043e\u0433\u043e \u043f\u043e\u0441\u0456\u0431\u043d\u0438\u043a\u0430 \u0437 \u0431\u0456\u043e\u043b\u043e\u0433\u0456\u0457 (9 \u043a\u043b\u0430\u0441)',
+    'footer': '\u041a\u043b\u044e\u0447 \u0432\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0435\u0439 \u2014 \u0431\u0456\u043e\u043b\u043e\u0433\u0456\u044f, 9 \u043a\u043b\u0430\u0441',
+    'notice': '\u0426\u0435\u0439 \u0444\u0430\u0439\u043b \u043c\u0456\u0441\u0442\u0438\u0442\u044c \u043b\u0438\u0448\u0435 \u0432\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0456. \u041f\u043e\u0432\u043d\u0456 \u0440\u043e\u0437\u0432\u02bc\u044f\u0437\u0430\u043d\u043d\u044f \u0437 \u043f\u043e\u044f\u0441\u043d\u0435\u043d\u043d\u044f\u043c\u0438 \u0454 \u0432 \u043e\u0441\u043d\u043e\u0432\u043d\u043e\u043c\u0443 \u043f\u043e\u0441\u0456\u0431\u043d\u0438\u043a\u0443.',
+}
+
+files = sorted(glob.glob(SRC + '/k*.md'))
+front = builder.title_pages(meta)
+figs, tabs, ch = builder.build(files, OUT, FIG, front_flowables=front, toc_title='\u0417\u043c\u0456\u0441\u0442')
+print('files:', len(files))
+print('figs', figs, 'tabs', tabs, 'chapters', ch)
+print('bytes', os.path.getsize(OUT))
